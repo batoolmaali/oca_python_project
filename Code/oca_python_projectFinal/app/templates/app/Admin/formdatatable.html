@@ -1,0 +1,159 @@
+{% extends "./starter.html" %}{% load static %}
+<!-- custom css and js -->
+{% block admincss %}
+<!-- DataTables -->
+<link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="{% static 'plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="{% static 'plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}">
+<!-- DataTables -->
+{% endblock admincss %}
+<!-- admin content -->
+{% block admincon %} {% block adminbread %}Data Table{% endblock adminbread %}
+
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+
+        <!-- Preloader -->
+        <div class="preloader flex-column justify-content-center align-items-center">
+            <img class="animation__shake" src="{% static 'dist/img/AdminLTELogo.png' %}" alt="AdminLTELogo" height="60" width="60">
+        </div>
+
+        <div class="content-wrapper" style="background-color: white;">
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-dark">
+                                <div class="card-header">
+                                    <h3 class="card-title">Quick Example <small>jQuery Validation</small></h3>
+                                </div>
+                                <form method="POST" id="quickForm" action="/emp" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="exampleInputText">Product Title</label>
+                                            <input type="text" name="name" class="form-control" id="exampleInputText" value="" placeholder="Enter Product Title">{{ form.name }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputText">Description</label>
+                                            <input type="text" name="des" class="form-control" id="exampleInputText" value="" placeholder="Enter Description">{{ form.des }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputText">Type Skin</label>
+                                            <input type="text" name="typeskin" class="form-control" id="exampleInputText" value="" placeholder="Enter Type">{{ form.typeskin }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputText">Time</label>
+                                            <input type="text" name="time" class="form-control" id="exampleInputText" value="" placeholder="Enter Time">{{ form.time }}
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="custom-file">
+                                                <input type="file" name="image" class="custom-file-input" id="exampleInputFile">
+                                                <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="custom-file">
+                                            <input type="file" name="image" class="custom-file-input" id="exampleInputFile">
+                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                        </div> -->
+                                        <div class="form-group mb-0">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" name="terms" class="custom-control-input" id="exampleCheck1">
+                                                <label class="custom-control-label" for="exampleCheck1">I agree to the <a href="#">terms of service</a>.</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <aside class="control-sidebar control-sidebar-dark ">
+        </aside>
+    </div>
+    {% endblock admincon %}
+    <!-- ./wrapper -->
+    {% block adminjs %}
+    <!-- AdminLTE for demo purposes -->
+    <script src="{% static 'dist/js/demo.js' %} "></script>
+    <!-- Page specific script -->
+    <!-- jquery-validation -->
+    <script src="{% static 'plugins/jquery-validation/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'plugins/jquery-validation/additional-methods.min.js' %}"></script>
+    <script>
+        $(function() {
+            $.validator.setDefaults({
+                submitHandler: function() {
+                    alert("Form successful submitted!");
+                }
+            });
+            $('#quickForm').validate({
+                rules: {
+                    name: {
+                        required: true,
+                        name: true,
+                    },
+                    des: {
+                        required: true,
+                        minlength: 5
+                    },
+                    time: {
+                        required: true,
+                        minlength: 3
+                    },
+                    typeskin: {
+                        required: true,
+                        minlength: 3
+                    },
+                    image: {
+                        required: true
+                    },
+                    terms: {
+                        required: true
+                    },
+                },
+                messages: {
+                    name: {
+                        required: "Please enter Prodcut Title",
+                        name: "Please enter Prodcut Title"
+                    },
+                    des: {
+                        required: "Please provide a description",
+                        minlength: "Your description must be at least 5 characters long"
+                    },
+                    time: {
+                        required: "Please provide a time",
+                        minlength: "Your time must be at least 3 characters long"
+                    },
+                    typeskin: {
+                        required: "Please provide a typeskin",
+                        minlength: "Your typeskin must be at least 5 characters long"
+                    },
+                    image: {
+                        required: "Please provide a image"
+                    },
+                    terms: "Please accept our terms"
+                },
+                errorElement: 'span',
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                }
+            });
+        });
+    </script>
+    {% endblock adminjs %}
